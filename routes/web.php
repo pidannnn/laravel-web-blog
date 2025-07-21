@@ -38,7 +38,7 @@ Route::get('/authors/{user:username}', function (User $user) {
     ]);
 });
 
-Route::get('/authors/{category:slug}', function (Category $category) {
+Route::get('/{category:slug}', function (Category $category) {
     // $posts = $category->posts->load(['author', 'category']);
     $posts = $category->posts;
 
