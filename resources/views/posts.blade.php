@@ -1,10 +1,12 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    <x-search />
+
     <div class="py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-0">
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
-            @foreach ($posts as $post)
+            @forelse ($posts as $post)
                 {{-- <article class="py-8 max-w-screen-md border-b border-gray-300">
                     <a href="/blog/{{ $post['slug'] }}" class="hover:underline">
                         <h2 class="mb-1 text-3xl tracking-tight font-bold text-gray-900">{{ $post['title'] }}</h2>
@@ -26,7 +28,7 @@
                 <article
                     class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-between items-center mb-5 text-gray-500">
-                        <a href="{{ $post->category->slug }}">
+                        <a href="/blog?category={{ $post->category->slug }}">
                             <span
                                 class="bg-{{ $post->category->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 hover:underline">
                                 {{ $post->category->name }}
@@ -40,7 +42,7 @@
                     </a>
                     <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::Limit($post->body, 150) }}</p>
                     <div class="flex justify-between items-center">
-                        <a href="/authors/{{ $post->author->username }}">
+                        <a href="/blog?authors={{ $post->author->username }}">
                             <div class="flex items-center space-x-3 hover:underline">
                                 <img class="w-7 h-7 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
@@ -62,7 +64,13 @@
                         </a>
                     </div>
                 </article>
-            @endforeach
+            @empty
+                <div>
+                    <p class="font-semibold text-2xl my-4 text-center">Articles not found!!</p>
+                    <a href="/blog" class="btn btn-primary font-medium text-sm text-blue-500 hover:underline">&laquo;
+                        Back to All Posts.</a>
+                </div>
+            @endforelse
 
 
         </div>
